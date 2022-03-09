@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [1, 66, 2, 6, 12, 99, 455, 8, 9, 7, 22225, 8788787, 7452, 6363, 1854, 82121, 2322214, 58448, 59, 545, 3223, 32254, 446, 323252696, 214, 369, 45569, 425478999, 8888, 66666, 7777, 120332555]
+        console.time('1')
+        let obj = {}
+        arr.forEach(item => {
+            obj[item] ? "" : obj[item] = true
+        })
+        console.timeEnd('1')
+        console.log(obj, Object.keys(obj));
+        console.time('2')
+        for (let i = 0; i < arr.length; i++) {
+            let show = true
+            for (let k = i + 1; k < arr.length; k++) {
+                let flag = null
+                if (arr[k - 1] > arr[k]) {
+                    flag = arr[k]
+                    arr[k] = arr[k - 1]
+                    arr[k - 1] = flag
+                    show = false
+                }
+            }
+            if (show) break
+        }
+        console.timeEnd("2")
+        console.log('arr', arr)
+    </script>
+</body>
+
+</html>

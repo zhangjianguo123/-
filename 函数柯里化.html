@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function H (a, b, c, d) {
+            return a + b + c + d
+        }
+        function calc (a) {
+            return function () {
+                console.log("需要的参数长度", a.length)
+                let arr = Array.prototype.slice.call(arguments)
+                console.log("argment", arguments, arr)
+                if (arr.length < a.length) {
+                    return calc(arr[0])
+                }
+
+            }
+        }
+
+        let newFun = calc(H)
+        newFun(5)(5)(5)(5)
+    </script>
+</body>
+
+</html>

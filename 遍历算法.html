@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [
+            {
+                id: 1,
+                pid: 0,
+                children: [
+                    {
+                        id: 10,
+                        pid: 1,
+                        children: [
+                            {
+                                id: 100,
+                                pid: 10
+                            },
+                            {
+                                id: 101,
+                                pid: 10
+                            }
+                        ],
+
+                    },
+                    {
+                        id: 11,
+                        pid: 1
+                    }
+                ]
+            },
+            {
+                id: 2,
+                pid: 0,
+                children: [
+                    {
+                        id: 20,
+                        pid: 2,
+                        children: [
+                            {
+                                id: 200,
+                                pid: 20
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                pid: 0,
+                children: [
+                    {
+                        id: 30,
+                        pid: 3
+                    }
+                ]
+            },
+            {
+                id: 4,
+                pid: 0
+            }
+        ]
+
+        let list = JSON.parse(JSON.stringify(arr))
+        //  深度优先遍历: 递归遍历
+        function fn (arr, newarr) {
+            if (Object.prototype.toString.call(arr) !== "[object Array]") return
+            arr.forEach((item, index) => {
+                newarr.push(item.id)
+                fn(item.children, newarr)
+            })
+        }
+        let newarr = []
+        fn(arr, newarr)
+        console.log("第一种结果id", newarr)
+
+        // 深度优先遍历：非递归遍历
+
+        function one (arr) {
+            let result = []
+            while (arr.length) {
+                let item = arr.shift()
+                result.push(item.id)
+                if (item.children) {
+                    arr.unshift(...item.children)
+                }
+                console.log("item", item)
+            }
+            console.log('最后的结果', result)
+            return result
+        }
+        one(arr)
+
+        // 广度优先遍历
+        function Two (arr) {
+            let result = []
+            while (arr.length > 0) {
+                let item = arr.shift()
+                result.push(item.id)
+                if (item.children) {
+                    arr.push(...item.children)
+                }
+            }
+            console.log("广度优先遍历", result)
+            return result
+        }
+        Two(list)
+    </script>
+</body>
+
+</html>
