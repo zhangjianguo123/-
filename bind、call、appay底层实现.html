@@ -9,7 +9,85 @@
 </head>
 
 <body>
+<script>
+    <!--   bind的实现-->
+    // Function.prototype.myBind = function (context, ...arg) {
+    //     let that = context || window
+    //     that.fn = this
+    //     let result
+    //     result = that.fn(...arg)
+    //     delete that.result
+    //     return result
+    // }
+    //
+    // function Parent(name, age) {
+    //     this.name = name
+    //     this.age = age
+    //     this.title = "父级"
+    // }
+    //
+    // function Son(name) {
+    //     Parent.myBind(this, name, 25)
+    // }
+    //
+    // let a = new Son("张三")
 
+    //    apply的实现
+
+    // Function.prototype.imitateApply = function (context) {
+    //     // 赋值作用域参数，如果没有则默认为 window，即访问全局作用域对象
+    //     context = context || window
+    //     // 绑定调用函数（.call之前的方法即this，前面提到过调用call方法会调用一遍自身，所以这里要存下来）
+    //     context.invokFn = this
+    //     // 执行调用函数，需要对是否有参数做判断，记录拿取返回值
+    //     let result
+    //     if (arguments[1]) {
+    //         result = context.invokFn(...arguments[1])
+    //     } else {
+    //         result = context.invokFn()
+    //     }
+    //     console.log("Sha ", result)
+    //     // 销毁调用函数，以免作用域污染
+    //     Reflect.deleteProperty(context, 'invokFn')
+    //     return result
+    // }
+    // function Parent(name, age) {
+    //     console.log(name, age)
+    //     this.name = name
+    //     this.age = age
+    //     this.title = "父级"
+    // }
+    //
+    // function Son(name) {
+    //     Parent.imitateApply(this, [name, 25])
+    // }
+    //
+    // let a = new Son("张三")
+    // console.log('aaaaaaa', a)
+
+//    bind、的实现
+    Function.prototype.myBind = function (context) {
+        let _this = this
+       let F = function (){}
+        let param = Array.prototype.slice.call(arguments,1)
+        console.log("传入的参数", param)
+        return function () {
+        }
+    }
+    function Parent(name, age) {
+        console.log(name, age)
+        this.name = name
+        this.age = age
+        this.title = "父级"
+    }
+
+    function Son(name) {
+        Parent.myBind(this, name, 25)
+    }
+
+    let a = new Son("张三")
+    console.log('aaaaaaa', a)
+</script>
 </body>
 
 </html>
