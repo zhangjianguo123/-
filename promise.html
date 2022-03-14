@@ -9,7 +9,77 @@
 </head>
 
 <body>
+    <script>
+        const isFunv = (val) => typeof val === "function"
+        class MyPromise {
+            constructor(handle) {
+                this.status = "padding"
+                this.value = ""
+                handle(this._resolve.bind(this), this._reject.bind(this))
+                this.resultList = []
+                this.rejectList = []
+            }
+            _resolve (val) {
+                const { status, resultList } = this
+                if (this.status !== "padding") return
+                this.valuev = val
+                this.status = "resolve"
+                while (resultList.length) {
+                    resultList.shift()(val)
+                }
+            }
+            _reject (val) { }
+            then (onfull, onrejt) {
+                const { status, value } = this
+                return new MyPromise((full, ject) => {
+                    let resultCall = (value) => {
+                        if (!isFunv(onfull)) {
+                            full(value)
+                        } else {
+                            let nwepromise = onfull(value)
+                            console.log("第二个", nwepromise)
+                            if (nwepromise instanceof MyPromise) {
+                                nwepromise.then(full, ject)
+                            } else {
+                                full(nwepromise)
+                            }
+                        }
+                    }
 
+                    switch (status) {
+                        case "padding":
+                            this.rejectList.push(onrejt)
+                            this.resultList.push(resultCall)
+                            break
+                        case "resolve":
+                            resultCall(value)
+                            break
+                        case "reject":
+                            onrejt(value)
+                            break
+
+                    }
+                })
+
+            }
+        }
+        let p = new MyPromise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("测试")
+            }, 1000)
+        })
+        p.then((res) => {
+            console.log("then结果", res)
+            return new MyPromise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("哈哈")
+                }, 2000)
+            })
+        }).then((res) => {
+            console.log("第二个then*********", res)
+        })
+        console.log("p实例", p)
+    </script>
 </body>
 
 </html>

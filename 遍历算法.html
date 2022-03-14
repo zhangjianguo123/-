@@ -67,15 +67,16 @@
                 pid: 0
             }
         ]
-
         let list = JSON.parse(JSON.stringify(arr))
         //  深度优先遍历: 递归遍历
         function fn (arr, newarr) {
             if (Object.prototype.toString.call(arr) !== "[object Array]") return
-            arr.forEach((item, index) => {
-                newarr.push(item.id)
-                fn(item.children, newarr)
-            })
+            arr.forEach(element => {
+                newarr.push(element.id)
+                if (element.children) {
+                    fn(element.children, newarr)
+                }
+            });
         }
         let newarr = []
         fn(arr, newarr)
@@ -87,29 +88,26 @@
             let result = []
             while (arr.length) {
                 let item = arr.shift()
-                result.push(item.id)
                 if (item.children) {
                     arr.unshift(...item.children)
                 }
-                console.log("item", item)
+                result.push(item.id)
             }
-            console.log('最后的结果', result)
-            return result
+            console.log("这是结果", result);
         }
         one(arr)
 
         // 广度优先遍历
         function Two (arr) {
             let result = []
-            while (arr.length > 0) {
+            while (arr.length) {
                 let item = arr.shift()
-                result.push(item.id)
                 if (item.children) {
                     arr.push(...item.children)
                 }
+                result.push(item.id)
             }
-            console.log("广度优先遍历", result)
-            return result
+            console.log("这是第三种", result);
         }
         Two(list)
     </script>

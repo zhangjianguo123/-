@@ -13,55 +13,66 @@
         function Parent (name, age) {
             this.name = name
             this.age = age
-            this.cat = "黑猫",
-                this.arr = [1, 2, 3]
+            this.cat = "黑猫"
+            this.arr = [1, 2, 3]
         }
         Parent.prototype.say = function () {
             console.log('父级原型添加方法', this.cat)
         }
-        // function Son () {
-        //     this.name = "张三"
-        // }
+
 
         // 第一种继承 : 创建实例时无法向父组件传参，并且修改父组件的复杂类型方法，会影响其他实例
+
+        // function Son() {
+        //     this.package = 63
+        // }
+
         // Son.prototype = new Parent()
+
         // let a = new Son()
-        // a.cat = "白猫"
-        // a.arr.push(4)
+        // a.arr.push(333)
         // let b = new Son()
-        // console.log('第一种', a, b)
+        // console.log("我是第一种继承", a, b)
 
         // 第二种：构造函数继承:无法使用附件原型方法，解决了修改复杂类型影响实例，也可以传参
-        // function Son () {
-        //     this.name = "张三"
-        //     Parent.call(this, this.name, 26)
+
+        // function Son(name) {
+        //     this.package = 96
+        //     Parent.call(this,name, 56)
         // }
-        // let c = new Son()
-        // c.arr.push(4)
-        // let d = new Son()
-        // console.log('查找实例', c, d)
+        // let a = new Son("张三")
+        // console.log("构造函数继承", a);
 
         // 第三种：组合继承 ：会调用两次父级构造函数、造成性能问题
-        // function Son () {
-        //     this.name = "张三"
-        //     Parent.call(this, this.name, 26)
+
+        // function Son (name) {
+        //     Parent.call(this, name, 96)
+        //     this.post = "son方法"
         // }
         // Son.prototype = new Parent()
+        // Son.prototype.fn = function () {
+        //     console.log("子组件的方法");
+        // }
         // Son.prototype.constructor = Son
-        // let e = new Son()
-        // console.log('查找实例', e)
+
+        // let a = new Son("欧派")
+        // console.log("这是组合继承", a);
 
 
         // 第四种：寄生组合继承：
-        function Son () {
-            this.name = "had"
-            Parent.call(this, "手机号", 21655)
-        }
-        Son.prototype = Object.create(Parent.prototype)
-        Son.prototype.constructor = Son
-        let f = new Son()
 
-        console.log("这是继承了", f)
+        function Son (po) {
+            this.son = po || "son"
+            Parent.call(this)
+        }
+
+        Son.prototype = Object.create(Parent.prototype)
+        Son.prototype.fun = "这是子元素的"
+        Son.prototype.constructor = Son
+        let a = new Son()
+        a.constructor.prototype.fun = "56"
+        console.log("寄生组合", a);
+
     </script>
 </body>
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            width: 300px;
+            height: 200px;
+            background: #000;
+        }
+
+        .son {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+
+        .son1 {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="son"></div>
+        <div class="son1"></div>
+    </div>
+    <script>
+        // js事件执行机制，从捕获、触发阶段、冒泡
+        // 为元素添添加addEventListenet监听事件，参数1为监听的事件名称、参数2为执行的函数、参数3为触发时机，默认为false。true为捕获阶段触发，false为冒泡阶段触发
+        // 事件委托，在父级元素上注册事件，拿到父级元素e，标准浏览器用ev.target，IE浏览器用event.srcElement，此时只是获取了当前节点的位置，并不知道是什么节点名称，这里我们用nodeName来获取具体是什么标签名，这个返回的是一个大写的，我们需要转成小写再做比较toLowerCase()
+        let parent = document.getElementsByClassName("parent")[0]
+        let son = document.getElementsByClassName("son")[0]
+        parent.onclick = function (event) {
+            console.log("父元素", event);
+        }
+        parent.addEventListener("click", function () {
+            console.log("我是冒泡时触发")
+        })
+        parent.addEventListener("click", function () {
+            console.log("我是捕获时触发")
+        }, true)
+        // son.onclick = function (e) {
+        //     e.stopPropagation();
+        //     console.log("子元素");
+        // }
+    </script>
+</body>
+
+</html>

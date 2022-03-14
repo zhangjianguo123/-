@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- cssText用来合并css样式表，默认会覆盖，+=会合并，但ie11以下都不兼容，只有ie11。用来一次性修改dom元素的样式，减少重绘以及回流 -->
+    <div id="box" style="background-color: red;">我是一段文字</div>
+    <script>
+        let box = document.getElementById("box")
+        console.log("zheshi", box.style.cssText)
+        box.style.cssText += ";width:200px;height:200px;line-height:200px";
+    </script>
+</body>
+
+</html>

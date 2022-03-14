@@ -9,65 +9,87 @@
 </head>
 
 <body>
-<script>
-    // 普通的add函数
-    function add(x, y) {
-        return x + y
-    }
+    <script>
+        // // 普通的add函数
+        // function add (x, y) {
+        //     return x + y
+        // }
 
-    // Currying后
-    function curryingAdd(x) {
-        return function (y) {
-            return x + y
+        // // Currying后
+        // function curryingAdd (x) {
+        //     return function (y) {
+        //         return x + y
+        //     }
+        // }
+
+        // console.log("1", add(1, 2))           // 3
+        // console.log("2", curryingAdd(1)(2))  // 3
+        // window.aaaa = "张三"
+        // // 初步封装
+        // function fn (a, b, c, d) {
+        //     console.log('这一段', a, b, c, d, this)
+        //     return a + b + c + d
+        // }
+
+        // let currying = function (fn) {
+        //     // args 获取第一个方法内的全部参数
+        //     let args = Array.prototype.slice.call(arguments, 1)
+        //     return function () {
+        //         // 将后面方法里的全部参数和args进行合并
+        //         let newArgs = args.concat(Array.prototype.slice.call(arguments))
+        //         // 把合并后的参数通过apply作为fn的参数并执行
+        //         return fn(...newArgs)
+        //     }
+        // }
+        // let as = currying(fn)
+        // let asw = as(1, 5, 6, 8)
+        // console.log("初步封装", asw)
+
+
+        // // 支持多参数传递
+        // const createCurry = (fn, ...args) => {
+        //     console.log('首调', fn, args)
+        //     let _args = args || []; // 调用第一个参数时传入的参数
+        //     let length = fn.length; // fn.length代码函数参数数量
+        //     return (...rest) => {
+        //         // 将每次调用内部函数的参数合并到总的数组中
+        //         _args.push(...rest);
+        //         // 参数数量不满足原始函数数量，返回curry函数
+        //         if (_args.length < length) {
+        //             return createCurry(fn, ..._args);
+        //         } else {
+        //             // 参数数量满足原始函数数量，触发执行
+        //             return fn(..._args);
+        //         }
+        //     }
+        // }
+
+        // const curryAdd = createCurry(fn, 2, 3);
+        // let sum = curryAdd(3)(5);    // 14
+        // console.log("第三种", sum)
+
+        function fn (a, b, c, d) {
+            return a + b + c + d
         }
-    }
 
-    console.log("1", add(1, 2))           // 3
-    console.log("2", curryingAdd(1)(2))  // 3
-    window.aaaa = "张三"
-    // 初步封装
-    function fn(a, b, c, d) {
-        console.log('这一段', a,b,c,d, this)
-        return a + b + c + d
-    }
-
-    let currying = function (fn) {
-        // args 获取第一个方法内的全部参数
-        let args = Array.prototype.slice.call(arguments, 1)
-        return function () {
-            // 将后面方法里的全部参数和args进行合并
-            let newArgs = args.concat(Array.prototype.slice.call(arguments))
-            // 把合并后的参数通过apply作为fn的参数并执行
-            return fn(...newArgs)
-        }
-    }
-    let as = currying(fn)
-    let asw = as(1, 5, 6, 8)
-    console.log("初步封装", asw)
-
-
-    // 支持多参数传递
-    const createCurry = (fn, ...args) => {
-        console.log('首调', fn, args)
-        let _args = args || []; // 调用第一个参数时传入的参数
-        let length = fn.length; // fn.length代码函数参数数量
-        return (...rest) => {
-            // 将每次调用内部函数的参数合并到总的数组中
-            _args.push(...rest);
-            // 参数数量不满足原始函数数量，返回curry函数
-            if (_args.length < length) {
-                return createCurry(fn, ..._args);
-            } else {
-                // 参数数量满足原始函数数量，触发执行
-                return fn(..._args);
+        function call (val, ..._arg) {
+            console.log("zhehsi", val);
+            // if(typeof val !== "function")
+            let arg = _arg || []
+            let len = val.length
+            return (...par) => {
+                arg.push(...par)
+                if (arg.length < len) {
+                    return call(val, ...arg)
+                } else {
+                    return val(...arg)
+                }
             }
         }
-    }
 
-    const curryAdd = createCurry(fn, 2,3);
-    let sum = curryAdd(3)(5);    // 14
-    console.log("第三种", sum)
-</script>
+        let isFun = call(fn, 2, 6)
+        console.log("这是", isFun(6, 9))
+    </script>
 </body>
 
 </html>
