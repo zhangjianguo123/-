@@ -10,32 +10,35 @@
 
 <body>
     <script>
-        // bind的实现
-        // Function.prototype.myCall = function (context, ...arg) {
-        //     context.fn = this
-        //     context.fn(...arg)
-        //     Reflect.deleteProperty(context, "fn")
-        //     return context
-        // }
+        // call的实现
+		// 注解：调用父级， 将父级函数（this）赋值给，调用时传入的this（子级对象）context的一个属性，
+		// 然后用子级对象调用赋值的父级函数，顺带将闯入的参数带去进去，（运行了父级函数），只不过调用是子级的，所以，父级
+		// 函数中，this.name等属性，将自然而然的给到了子级对象上。
+   //      Function.prototype.myCall = function (context, ...arg) {
+			// console.log('经历后的', context);
+   //          context.fn = this
+   //          context.fn(...arg)
+   //          Reflect.deleteProperty(context, "fn")
+   //          return context
+   //      }
 
-        // function Parent (name, age) {
-        //     this.name = name
-        //     this.age = age
-        //     this.title = "父级"
-        // }
+   //      function Parent (name, age) {
+   //          this.name = name
+   //          this.age = age
+   //          this.title = "父级"
+   //      }
 
-        // function Son (name) {
-        //     let result = Parent.myCall(this, name, 25)
-        //     console.log("reu", result)
-        // }
+   //      function Son (name) {
+   //          let result = Parent.myCall(this, name, 25)
+   //          console.log("reu", result)
+   //      }
 
-        // let a = new Son("张三")
-        // console.log("call", a);
+   //      let a = new Son("张三")
+   //      console.log("call", a);
 
-        //    apply的实现
+        // apply的实现同call实现，只不过参数为数组
 
         // Function.prototype.imitateApply = function (context) {
-
         //     context.fn = this
         //     arg = Array.prototype.slice.call(arguments, 1)
         //     console.log("擦了", arg[0])
@@ -64,24 +67,28 @@
         //    bind、的实现
         Function.prototype.myBind = function (context) {
             let parentParam = [...arguments].slice(1)
+			console.log(parentParam, arguments);
             let _this = this
             let roubind = function () {
+				console.log('没被调用', _this);
                 let val = [...parentParam, ...arguments]
                 return _this.call(context, ...val)
             }
             return roubind
         }
-        function Parent (name, age) {
+        function Parent (name, age, title) {
             this.name = name
             this.age = age
-            this.title = "父级"
+            this.title =title
         }
         Parent.prototype.say = function () {
             console.log("父级构造函数的方法", this.name)
         }
 
         function Son (name) {
-            Parent.myBind(this, name, 25)()
+            let a = Parent.myBind(this, name, 25)
+			a('带锯机')
+			console.log('打发时间OK', a);
         }
 
         let a = new Son("张三")

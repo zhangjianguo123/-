@@ -21,8 +21,9 @@
             }
             _resolve (val) {
                 const { status, resultList } = this
+				console.log('执行result');
                 if (this.status !== "padding") return
-                this.valuev = val
+                this.value = val
                 this.status = "resolve"
                 while (resultList.length) {
                     resultList.shift()(val)
@@ -45,7 +46,7 @@
                             }
                         }
                     }
-
+					console.log('状态',status);
                     switch (status) {
                         case "padding":
                             this.rejectList.push(onrejt)

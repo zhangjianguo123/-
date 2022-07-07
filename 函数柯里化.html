@@ -72,23 +72,21 @@
             return a + b + c + d
         }
 
-        function call (val, ..._arg) {
-            console.log("zhehsi", val);
-            // if(typeof val !== "function")
-            let arg = _arg || []
-            let len = val.length
-            return (...par) => {
-                arg.push(...par)
+        function cloneFun (fn, ...val) {
+            let len = fn.length
+            let arg = val || []
+            let newfun = function (...param) {
+                arg.push(...param)
                 if (arg.length < len) {
-                    return call(val, ...arg)
+                    return cloneFun(fn, ...arg)
                 } else {
-                    return val(...arg)
+                    return fn(...arg)
                 }
             }
+            return newfun
         }
-
-        let isFun = call(fn, 2, 6)
-        console.log("这是", isFun(6, 9))
+        let a = cloneFun(fn)
+        console.log("就是他", a(1, 2, 3)(4))
     </script>
 </body>
 

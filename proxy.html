@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// const person = {name: '张三', age: 22}
+			// function reactive(target) {
+			// 	const handler = {
+			// 		get(target, key, receiver) {
+			// 			console.log('访问了', target, key, receiver);
+			// 			 return Reflect.get(target, key, receiver)
+			// 		},
+			// 		set(target, key, value, receiver) {
+			// 			console.log('设置了', target, key, value, receiver);
+			// 			 Reflect.set(target, key, value, receiver)
+			// 		}
+			// 	}
+			// 	return new Proxy(target, handler)
+			// }
+			// const data = reactive(person)
+			// console.log(data);
+			// data.name = '李四'
+			// console.log(data.name);
+			// data.body = '内容'
+			// console.log(data.body);
+			
+			
+			// 测试newmap
+			// let deps = new Map()
+			// let a = deps.get('haha')
+			// if(!a) {
+			// 	deps.set('haha', a = new Set())
+			// }
+			
+			// console.log('测试', a);
+			
+			
+			
+			// const person = { name: '林三心', age: 22 }
+			// let nameStr1 = ''
+			// let nameStr2 = ''
+			// let ageStr1 = ''
+			// let ageStr2 = ''
+			
+			// const effectNameStr1 = () => { nameStr1 = `${person.name}是个大菜鸟` }
+			// const effectNameStr2 = () => { nameStr2 = `${person.name}是个小天才` }
+			// const effectAgeStr1 = () => { ageStr1 = `${person.age}岁已经算很老了` }
+			// const effectAgeStr2 = () => { ageStr2 = `${person.age}岁还算很年轻啊` }
+			
+			// const depsMap = new Map()
+			
+			// function track(key) {
+			//     let dep = depsMap.get(key)
+			//     if (!dep) {
+			//         depsMap.set(key, dep = new Set())
+			//     }
+			//     // 这里先暂且写死
+			//     if (key === 'name') {
+			//         dep.add(effectNameStr1)
+			//         dep.add(effectNameStr2)
+			//     } else {
+			//         dep.add(effectAgeStr1)
+			//         dep.add(effectAgeStr2)
+			//     }
+			// }
+			// function trigger (key) {
+			//     const dep = depsMap.get(key)
+			//     if (dep) {
+			//         dep.forEach(effect => effect())
+			//     }
+			// }
+			
+			// track('name') // 收集person.name的依赖
+			// track('age') // 收集person.age的依赖
+			
+			
+			
+			// effectNameStr1()
+			// effectNameStr2()
+			// effectAgeStr1()
+			// effectAgeStr2()
+			// console.log(nameStr1, nameStr2, ageStr1, ageStr2)
+			// // 林三心是个大菜鸟 林三心是个小天才 22岁已经算很老了 22岁还算很年轻啊
+			
+			// person.name = 'sunshine_lin'
+			// person.age = 18
+			
+			// trigger('name') // 通知person.name的依赖变量更新
+			// trigger('age') // 通知person.age的依赖变量更新
+			
+			// console.log(nameStr1, nameStr2, ageStr1, ageStr2)
+			// sunshine_lin是个大菜鸟 sunshine_lin是个小天才 18岁已经算很老了 18岁还算很年轻啊
+			
+			const person = reactive({ name: '林三心', age: 22 })
+			const animal = reactive({ type: 'dog', height: 50 })
+			let callbackCopy
+			
+			const MyWeakMap = new WeakMap()
+			
+			let nameStr1 = ''
+			let nameStr2 = ''
+			let ageStr1 = ''
+			let ageStr2 = ''
+			let typeStr1 = ''
+			let typeStr2 = ''
+			let heightStr1 = ''
+			let heightStr2 = ''
+			
+			const effectNameStr1 = () => { nameStr1 = `${person.name}是个大菜鸟` }
+			const effectNameStr2 = () => { nameStr2 = `${person.name}是个小天才` }
+			const effectAgeStr1 = () => { ageStr1 = `${person.age}岁已经算很老了` }
+			const effectAgeStr2 = () => { ageStr2 = `${person.age}岁还算很年轻啊` }
+			const effectTypeStr1 = () => { typeStr1 = `${animal.type}是个大菜鸟` }
+			const effectTypeStr2 = () => { typeStr2 = `${animal.type}是个小天才` }
+			const effectHeightStr1 = () => { heightStr1 = `${animal.height}已经算很高了` }
+			const effectHeightStr2 = () => { heightStr2 = `${animal.height}还算很矮啊` }
+
+			
+			
+			function track(target, key) {
+				// console.log('打印一下', callbackCopy);
+				if(!callbackCopy) return
+				let newWeakMap = MyWeakMap.get(target)
+				if(!newWeakMap) {
+					MyWeakMap.set(target, newWeakMap = new Map)
+				}
+				let MapS = newWeakMap.get(key)
+				if(!MapS) {
+					newWeakMap.set(key, MapS = new Set())
+				}
+				// console.log('++++++++', key, newWeakMap);
+				MapS.add(callbackCopy)
+			}
+			
+			function trigger(target, key) {
+				let depMap = MyWeakMap.get(target)
+				if(depMap) {
+					const dep = depMap.get(key)
+					if(dep) {
+						dep.forEach(effect =>{
+							effect()
+						} )
+					}
+				}
+			}
+			
+			function reactive(target) {
+				const proxy = {
+					get: (target, key, reactver) => {
+						track(reactver, key)
+						return Reflect.get(target, key, reactver)
+					},
+					set: (target, key, value, reactver ) => {
+						Reflect.set(target, key, value, reactver)
+						trigger(reactver, key)
+					}
+				}
+				return new Proxy(target, proxy)
+			}
+			
+			function effect(callback) {
+				callbackCopy = callback
+				callbackCopy()
+				callbackCopy = null
+				
+			}
+			
+			effect(effectNameStr1)
+			effect(effectNameStr2)
+			effect(effectAgeStr1)
+			effect(effectAgeStr2)
+			effect(effectTypeStr1)
+			effect(effectTypeStr2)
+			effect(effectHeightStr1)
+			effect(effectHeightStr2)
+			
+			// console.log('对象', MyWeakMap);
+			
+			// console.log(nameStr1, nameStr2, ageStr1, ageStr2)
+			person.name = 'sunshine_lin'
+			person.age = 18
+			animal.type = '猫'
+			animal.height = 20
+			// trigger(person, 'name')
+			// trigger(person, 'age')
+			// trigger(animal, 'type')
+			// trigger(animal, 'height')
+			
+			// console.log(nameStr1, nameStr2, ageStr1, ageStr2)
+			// sunshine_lin是个大菜鸟 sunshine_lin是个小天才 18岁已经算很老了 18岁还算很年轻啊
+			
+			// console.log(typeStr1, typeStr2, heightStr1, heightStr2)
+			// 猫是个大菜鸟 猫是个小天才 20已经算很高了 20还算很矮啊
+			
+			
+			// 实现ref
+			let num = 0
+			function Ref(value) {
+				return reactive({
+					value
+				})
+			}
+			let val = Ref(5)
+			effect(() => num = val.value * 5)
+			console.log(val);
+			val.value = 10
+			console.log(num);
+			
+			
+			// 实现computed
+			function computed(fn) {
+				let result = Ref()
+				effect(() => result.value = fn())
+				return result
+			}
+			
+			let a = Ref(1)
+			let b = Ref(2)
+			let c = computed(() => a.value + b.value)
+			let d = computed(() => a.value * b.value)
+			
+			console.log(c.value, d.value);
+			a.value = 10
+			console.log(c.value, d.value);
+			b.value = 20
+			console.log(c.value, d.value);
+		</script>
+	</body>
+</html>
