@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html,body {
+            width: 100%;
+            height: 100%;
+        }
+        #box {
+            width: 100%;
+            height: 800px;
+            border: 1px solid red;
+            margin: 40px 0;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <img  style="margin:150px 0; width: 100%"; id="box1"></img>
+    <img  style="margin:150px 0; width: 100%"; id="box2"></img>
+    <img  style="margin:150px 0; width: 100%"; id="box3"></img>
+    <img  style="margin:150px 0; width: 100%"; id="box4"></img>
+    <img  style="margin:150px 0; width: 100%"; id="box5"></img>
+
+    <script>
+        var box = document.getElementById('box3'); // 获取元素
+        let arr = ["./imgs/1.png", "./imgs/2.png" , "./imgs/3.png", "./imgs/4.jpg", "./imgs/5.png", "./imgs/6.png"]
+
+        window.onscroll= function(){
+            let imgs = document.querySelectorAll('img')
+            let scrHei = window.screen.height
+
+            for (let i = 0; i < imgs.length; i++) {
+                // if(imgs[i])
+                console.log(arr, i+1, '---------',scrHei, imgs[i].getBoundingClientRect().top, imgs[i].getBoundingClientRect().top - scrHei)
+                if(imgs[i].getBoundingClientRect().top - scrHei < 300) {
+                    imgs[i].src = arr[i]
+                }
+            }
+            // let hei = box.getBoundingClientRect().top
+            // console.log(hei, scrHei); // 元素上边距离页面上边的距离
+
+            // console.log('可视区高度', hei - scrHei)
+
+            //变量t是滚动条滚动时，距离顶部的距离
+            // var t = document.documentElement.scrollTop||document.body.scrollTop;
+            // var scrollup = document.getElementById('scrollup');
+            // //当滚动到距离顶部200px时，返回顶部的锚点显示
+            // if(t>=200){
+            //     scrollup.style.display="block";
+            // }else{          //恢复正常
+            //     scrollup.style.display="none";
+            // }
+            //
+            // console.log(box.getBoundingClientRect().right); // 元素右边距离页面左边的距离
+            //
+            // console.log(box.getBoundingClientRect().bottom); // 元素下边距离页面上边的距离
+            //
+            // console.log(box.getBoundingClientRect().left); // 元素左边距离页面左边的距离
+        }
+    </script>
+</body>
+</html>

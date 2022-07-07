@@ -56,14 +56,6 @@
         //     this.age = age
         //     this.title = "父级"
         // }
-
-        // function Son (name) {
-        //     Parent.imitateApply(this, [name, 25])
-        // }
-
-        // let a = new Son("张三")
-        // console.log('aaaaaaa', a)
-
         //    bind、的实现
         Function.prototype.myBind = function (context) {
             let parentParam = [...arguments].slice(1)
