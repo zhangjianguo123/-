@@ -9,108 +9,157 @@
 </head>
 
 <body>
-    <script>
-        let arr = [
-            {
-                id: 1,
-                pid: 0,
-                children: [
-                    {
-                        id: 10,
-                        pid: 1,
-                        children: [
-                            {
-                                id: 100,
-                                pid: 10
-                            },
-                            {
-                                id: 101,
-                                pid: 10
-                            }
-                        ],
+<script>
+    let arr = [
+        {
+            id: 1,
+            pid: 0,
+            children: [
+                {
+                    id: 10,
+                    pid: 1,
+                    children: [
+                        {
+                            id: 100,
+                            pid: 10
+                        },
+                        {
+                            id: 101,
+                            pid: 10
+                        }
+                    ],
 
-                    },
-                    {
-                        id: 11,
-                        pid: 1
-                    }
-                ]
-            },
-            {
-                id: 2,
-                pid: 0,
-                children: [
-                    {
-                        id: 20,
-                        pid: 2,
-                        children: [
-                            {
-                                id: 200,
-                                pid: 20
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 3,
-                pid: 0,
-                children: [
-                    {
-                        id: 30,
-                        pid: 3
-                    }
-                ]
-            },
-            {
-                id: 4,
-                pid: 0
-            }
-        ]
-        let list = JSON.parse(JSON.stringify(arr))
-        //  深度优先遍历: 递归遍历
-        function fn (arr, newarr) {
-            if (Object.prototype.toString.call(arr) !== "[object Array]") return
-            arr.forEach(element => {
-                newarr.push(element.id)
-                if (element.children) {
-                    fn(element.children, newarr)
+                },
+                {
+                    id: 11,
+                    pid: 1
                 }
-            });
-        }
-        let newarr = []
-        fn(arr, newarr)
-        console.log("第一种结果id", newarr)
-
-        // 深度优先遍历：非递归遍历
-
-        function one (arr) {
-            let result = []
-            while (arr.length) {
-                let item = arr.shift()
-                if (item.children) {
-                    arr.unshift(...item.children)
+            ]
+        },
+        {
+            id: 2,
+            pid: 0,
+            children: [
+                {
+                    id: 20,
+                    pid: 2,
+                    children: [
+                        {
+                            id: 200,
+                            pid: 20
+                        }
+                    ]
                 }
-                result.push(item.id)
-            }
-            console.log("这是结果", result);
-        }
-        one(arr)
-
-        // 广度优先遍历
-        function Two (arr) {
-            let result = []
-            while (arr.length) {
-                let item = arr.shift()
-                if (item.children) {
-                    arr.push(...item.children)
+            ]
+        },
+        {
+            id: 3,
+            pid: 0,
+            children: [
+                {
+                    id: 30,
+                    pid: 3
                 }
-                result.push(item.id)
-            }
-            console.log("这是第三种", result);
+            ]
+        },
+        {
+            id: 4,
+            pid: 0
         }
-        Two(list)
-    </script>
+    ]
+    let list = JSON.parse(JSON.stringify(arr))
+
+    //  深度优先遍历: 递归遍历
+    function fn(arr, newarr) {
+        if (Object.prototype.toString.call(arr) !== "[object Array]") return
+        arr.forEach(element => {
+            newarr.push(element.id)
+            if (element.children) {
+                fn(element.children, newarr)
+            }
+        });
+    }
+
+    let newarr = []
+    fn(arr, newarr)
+    console.log("第一种结果id", newarr)
+
+    // 深度优先遍历：非递归遍历
+
+    function one(arr) {
+        let result = []
+        while (arr.length) {
+            let item = arr.shift()
+            if (item.children) {
+                arr.unshift(...item.children)
+            }
+            result.push(item.id)
+        }
+        console.log("这是结果", result);
+    }
+
+    one(arr)
+
+    // 广度优先遍历
+    function Two(arr) {
+        let result = []
+        while (arr.length) {
+            let item = arr.shift()
+            if (item.children) {
+                arr.push(...item.children)
+            }
+            result.push(item.id)
+        }
+        console.log("这是第三种", result);
+    }
+
+    Two(list)
+
+
+    //    扁平化
+    let lists = [[1,85, 2,120, 2, 52], [98, 3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];
+
+    function sort(list) {
+        let arr = new Set()
+        while (list.length) {
+            let newA = list.splice(0, 1)
+            if (typeof newA[0] === 'object') {
+                newA[0].forEach(v => {
+                    console.log(v)
+                    if (typeof v === 'object') {
+                        lists.push(v)
+                    } else {
+                        arr.add(v)
+                    }
+                })
+            } else {
+                arr.add(newA[0])
+            }
+        }
+        let setArr = [...arr]
+        for (let i = 0; i < setArr.length - 1; i++) {
+            console.log('撒旦撒记录')
+            let show = true
+            for (let j = 0; j < setArr.length; j++) {
+                if (setArr[j] > setArr[j + 1]) {
+                    let flag = setArr[j]
+                    setArr[j] = setArr[j + 1]
+                    setArr[j + 1] = flag
+                    show = false
+                }
+            }
+            if(show) {
+                console.log('到几结束了', i)
+                break
+            }
+
+        }
+        console.log(setArr)
+
+    }
+
+    sort(lists)
+</script>
 </body>
 
 </html>

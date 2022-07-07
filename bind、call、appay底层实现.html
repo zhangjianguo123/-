@@ -9,84 +9,89 @@
 </head>
 
 <body>
-    <script>
-        // bind的实现
-        // Function.prototype.myCall = function (context, ...arg) {
-        //     context.fn = this
-        //     context.fn(...arg)
-        //     Reflect.deleteProperty(context, "fn")
-        //     return context
-        // }
+<script>
+    // call的实现
+    Function.prototype.myCall = function (context, ...arg) {
+        console.log(this)
+        context.fn = this
+        context.fn(...arg)
+        Reflect.deleteProperty(context, "fn")
+        return context
+    }
+    function Parent (name, age) {
+        this.name = name
+        this.age = age
+        this.title = "父级"
+    }
 
-        // function Parent (name, age) {
-        //     this.name = name
-        //     this.age = age
-        //     this.title = "父级"
-        // }
+    Parent.prototype.say = function () {
+        console.log("打印父级", this.title)
+    }
+    function Son (name) {
+        let result = Parent.myCall(this, name, 25)
+        // console.log("reu", result)
+    }
 
-        // function Son (name) {
-        //     let result = Parent.myCall(this, name, 25)
-        //     console.log("reu", result)
-        // }
+    let a = new Son("张三")
+    console.log("call", a);
 
-        // let a = new Son("张三")
-        // console.log("call", a);
+    //    apply的实现
 
-        //    apply的实现
+    // Function.prototype.imitateApply = function (context) {
 
-        // Function.prototype.imitateApply = function (context) {
+    //     context.fn = this
+    //     arg = Array.prototype.slice.call(arguments, 1)
+    //     console.log("擦了", arg[0])
+    //     if (Object.prototype.toString.call(arg[0]) === "[object Array]") {
+    //         context.fn(...arg[0])
+    //     } else {
+    //         context.fn()
+    //     }
+    //     Reflect.deleteProperty(context, "fn")
+    //     return context
+    // }
+    // function Parent (name, age) {
+    //     console.log(name, age)
+    //     this.name = name
+    //     this.age = age
+    //     this.title = "父级"
+    // }
 
-        //     context.fn = this
-        //     arg = Array.prototype.slice.call(arguments, 1)
-        //     console.log("擦了", arg[0])
-        //     if (Object.prototype.toString.call(arg[0]) === "[object Array]") {
-        //         context.fn(...arg[0])
-        //     } else {
-        //         context.fn()
-        //     }
-        //     Reflect.deleteProperty(context, "fn")
-        //     return context
-        // }
-        // function Parent (name, age) {
-        //     console.log(name, age)
-        //     this.name = name
-        //     this.age = age
-        //     this.title = "父级"
-        // }
+    // function Son (name) {
+    //     Parent.imitateApply(this, [name, 25])
+    // }
 
-        // function Son (name) {
-        //     Parent.imitateApply(this, [name, 25])
-        // }
+    // let a = new Son("张三")
+    // console.log('aaaaaaa', a)
 
-        // let a = new Son("张三")
-        // console.log('aaaaaaa', a)
+    //    bind、的实现
+    // Function.prototype.myBind = function (context) {
+    //     let parentParam = [...arguments].slice(1)
+    //     let _this = this
+    //     return function () {
+    //         let val = [...parentParam, ...arguments]
+    //         return _this.call(context, ...val)
+    //     }
+    // }
+    // function Parent (name, age) {
+    //     this.name = name
+    //     this.age = age
+    //     this.title = "父级"
+    // }
+    // Parent.prototype.say = function () {
+    //     console.log("父级构造函数的方法", this.name)
+    // }
+    //
+    // function Son (name) {
+    //     let f = Parent.myBind(this, name, 25)
+    //     console.log("f", f())
+    // }
+    //
+    // let a = new Son("张三")
+    // console.log('aaaaaaa', a)
 
-        //    bind、的实现
-        Function.prototype.myBind = function (context) {
-            let parentParam = [...arguments].slice(1)
-            let _this = this
-            let roubind = function () {
-                let val = [...parentParam, ...arguments]
-                return _this.call(context, ...val)
-            }
-            return roubind
-        }
-        function Parent (name, age) {
-            this.name = name
-            this.age = age
-            this.title = "父级"
-        }
-        Parent.prototype.say = function () {
-            console.log("父级构造函数的方法", this.name)
-        }
 
-        function Son (name) {
-            Parent.myBind(this, name, 25)()
-        }
-
-        let a = new Son("张三")
-        console.log('aaaaaaa', a)
-    </script>
+</script>
 </body>
 
 </html>
