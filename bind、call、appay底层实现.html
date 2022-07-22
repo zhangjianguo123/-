@@ -57,16 +57,28 @@
         //     this.title = "父级"
         // }
         //    bind、的实现
-        Function.prototype.myBind = function (context) {
-            let parentParam = [...arguments].slice(1)
-			console.log(parentParam, arguments);
+        // Function.prototype.myBind = function (context) {
+        //     let parentParam = [...arguments].slice(1)
+		// 	console.log(parentParam, arguments);
+        //     let _this = this
+        //     let roubind = function () {
+		// 		console.log('没被调用', _this);
+        //         let val = [...parentParam, ...arguments]
+        //         return _this.call(context, ...val)
+        //     }
+        //     return roubind
+        // }
+
+
+        Function.prototype.myBind = function () {
+            let list = [].slice.call(arguments,0)
+            let cb = list.splice(0,1)[0]
             let _this = this
-            let roubind = function () {
-				console.log('没被调用', _this);
-                let val = [...parentParam, ...arguments]
-                return _this.call(context, ...val)
+            return function () {
+                let arg = [].slice.call(arguments)
+                list.push(...arg)
+                return _this.call(cb, ...list)
             }
-            return roubind
         }
         function Parent (name, age, title) {
             this.name = name
@@ -80,7 +92,7 @@
         function Son (name) {
             let a = Parent.myBind(this, name, 25)
 			a('带锯机')
-			console.log('打发时间OK', a);
+			// console.log('打发时间OK', a);
         }
 
         let a = new Son("张三")

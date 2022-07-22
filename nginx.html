@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<input id="box" type="text">
+<button id="btm">提交</button>
+<script>
+    let a = document.getElementById('box')
+    let b = document.getElementById('btm')
+
+    b.onclick = function (){
+        console.log(eval(a.value))
+        // eval(a.value)
+        // console.log(typeof a.value, a.value)
+
+    }
+
+
+    // (function (v){ console.log('我立即执行了', this, v)  }(362))
+    function fn (v){
+        let a = localStorage.getItem('data')
+        console.log('我立即执行了', this, v, a)
+    }
+    let obj = {
+        id : 21,
+        say: function () {
+            console.log('对象')
+        }
+    }
+    function Son() {
+        this.id = 21
+        this.say = function () {}
+    }
+    Son.prototype.fn = function () {}
+    let newObj = new Son()
+    console.log(typeof (newObj + ''))
+    let dsfs =(newObj + '')
+    console.log('打他就是', (newObj + '') )
+    let as = JSON.parse(JSON.stringify(Son.toString()))
+
+
+    window.addEventListener("beforeunload", function (e) {
+        localStorage.setItem('kes', JSON.stringify({id: '率先你了'}))
+    })
+    const fs = require('fs')
+    console.log('fs', fs)
+    const paths = '/components'
+    let fd = fs.readdirSync(paths)
+    console.log('aaa', fd)
+</script>
+</body>
+</html>
