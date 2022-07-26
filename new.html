@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // function objectFactory() {
+    //     const obj = {}
+    //     console.log(arguments)
+    //     // const Constructor = [].shift.call(arguments)
+    //     obj.__proto__ = Constructor.prototype
+    //     const res = Constructor.apply(obj, arguments);
+    //     return typeof res === 'object' ? res : obj;
+    // }
+    //
+    // function Person () {
+    // }
+    //
+    // // 使用 objectFactory
+    // var student = objectFactory(Person,'nis')
+    //
+    // console.log(student)
+
+
+    function News(cb) {
+        let value = [].slice.call(arguments, 1)
+        let o = {}
+        o.__proto__ = cb.prototype
+        let res = cb.apply(o, value)
+        return typeof res  === 'object' ? res : o
+    }
+
+    function Person(par) {
+        console.log('传入的参数', par)
+        this.name = '张三'
+    }
+    Person.prototype.say = function () {
+        console.log('打印姓名', this.name)
+    }
+
+    let a = new Person('我i我')
+    let b = News(Person,666)
+    console.log('new', a)
+    console.log('mynew', b)
+
+</script>
+</body>
+</html>
