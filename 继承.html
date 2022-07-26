@@ -19,9 +19,101 @@
         Parent.prototype.say = function () {
             console.log('父级原型添加方法', this.cat)
         }
+		Parent.prototype.list = ['小猫', '小狗', '小猪']
+		
+		// console.log(new Parent);
+		let perent = {
+			id: 5,
+			arr: [1,2,3,4]
+		}
+		
+		// 1、原型链
+		// function One() {}
+		// One.prototype = new Parent()
+		// let ones = new One()
+		
+		// console.log('原型链继承', ones);
+		
+		/* 2构造函数: 无法继承原型上的方法 */
+		
+		// function Two() {
+		// 	this.name = '呜呜'
+		// 	Parent.call(this, 'two', '99')
+		// }
+		
+		// let two = new Two()
+		// two.arr.push(999)
+		// let twos = new Two()
+		// console.log('two', two, twos);
+		
+		/* 3组合继承 */
+		
+		// function Three() {
+		// 	Parent.call(this,'three', 333)
+		// 	this.three = '哈哈hi'
+		// }
 
+		// // Three.prototype = Parent.prototype
+		// Three.prototype = new Parent()
+		// Three.prototype.constructor  = Three
+		// Three.prototype.fn = function() {
+		// 	console.log(this.three);
+		// }
+		// let three = new Three()
+		// three.list.push('杀掉')
+		// let threes = new Parent()
+		// console.log('这是啥',three , threes);
+		
+		/* 4： 原型式继承： 修改会牵连其他实例 */
+		
+		// function Son() {
+		// 	this.son = 548
+		// }
+		// Son.prototype = Object.create(new Parent())
+		// Son.prototype.fn = function() {
+		// 	console.log(this.son);
+		// }
+		// let four = new Son()
+		// four.arr.push('东方搜颗粒剂')
+		// let fours= new Son()
+		// console.log(four, fours);
+		
+		/* 5寄生继承: 用一个函数来增加对象,并且无法为继承元素添加prototype属性 */
+		// function Son() {
+		// 	let F = Object.create(new Parent())
+		// 	console.log('返回了', F);
+		// 	F.fn = function() {console.log(this.arr)}
+		// 	return F
+		// }
+		// Son.prototype.post= function(){
+		// 	console.log('就OK');
+		// }
+		// let sons = new Son()
+		// sons.arr.push(5565)
+		// let sona = new Son()
+		
+		// console.log(sons, sona,);
+		
+		
+		/* 6寄生组合继承 */
+		 function Lu() {
+			 this.name = 'lu'
+		 }
+		 function Extents(par, son) {
+			let F = Object.create(Parent.prototype)
+			F.constructor = son
+			console.log(F);
+			son.prototype = F
+			F = null
+		 }
 
-        // 第一种继承 : 创建实例时无法向父组件传参，并且修改父组件的复杂类型方法，会影响其他实例
+		 Extents(Parent, Lu)
+		 Lu.prototype.post = {
+		 	 ers: '滚底座'
+		 }
+		 let z = new Lu()
+		 console.log('的健身房', z);
+        // 第一种继承: 原型链继承 创建实例时无法向父组件传参，并且修改父组件的复杂类型方法，会影响其他实例
 
         // function Son() {
         //     this.package = 63
@@ -57,21 +149,81 @@
 
         // let a = new Son("欧派")
         // console.log("这是组合继承", a);
-
-
+		
+		
+		// 四、原型式继承
+		 
+		//  function ObjCreate(o) {
+		// 	 let F = function() {}
+		// 	 F.prototype = o
+		// 	 console.log('ff', F.prototype)
+		// 	 return new F()
+		//  }
+		
+		// let test2 = ObjCreate(perent)
+		// console.log('test2', test2);
+		
+		// let newObj = Object.create(perent)
+		// let test = Object.create(perent)
+		// newObj.arr.push(10)
+		// console.log('拿到的数据', newObj, test);
+		
+		
+		// 寄生式继承
+		
+		// function createObj(o){
+		//   let clone = Object.create(o);  //调用函数创建一个新对象
+		//   clone.sayName = function(){  // 以某种方式来增强该对象
+		//     console.log('hi');
+		//   }
+		//   return clone           // 返回该对象
+		// }
+		
+		// let test5 = createObj(perent)
+		// test5.arr.push(12)
+		// let test6 = createObj(perent)
+		
+		// console.log('寄生式继承', test5, test6);
+		
         // 第四种：寄生组合继承：
 
-        function Son (po) {
-            this.son = po || "son"
-            Parent.call(this)
-        }
+  //       function Son (po) {
+  //           this.son = po || "son"
+  //           Parent.call(this)
+  //       }
 
-        Son.prototype = Object.create(Parent.prototype)
-        Son.prototype.fun = "这是子元素的"
-        Son.prototype.constructor = Son
-        let a = new Son()
-        a.constructor.prototype.fun = "56"
-        console.log("寄生组合", a);
+  //       Son.prototype = Object.create(Parent.prototype)
+  //       Son.prototype.constructor = Son
+		// Son.prototype.fun = "这是子元素的"
+  //       let a = new Son()
+		// a.arr.push(9)
+		// let b = new Son()
+  //       a.constructor.prototype.fun = "56"
+  //       console.log("寄生组合", a, b);
+  
+		function New(cb, ...arg) {
+			let F = {}
+			F.__proto__ = cb.prototype
+			console.log( F, '+++++', F.__proto__, arguments, arg);
+			let result = cb.apply(F, arg)
+			console.log('返回的', result, F);
+			return result instanceof Object ? result : F
+		}
+  
+		function fn(v, n) {
+			this.name = n
+			this.age = v || 99
+			console.log('打印一下this', this, this.name);
+			return 54
+			// return {age: 225}
+		}
+		fn.prototype.cb = function() {
+			console.log('方法内打印一下', this.name);
+		}
+		let post = New(fn, 26, '李四')
+		
+		console.log( 'post', post.cb());
+  
 
     </script>
 </body>

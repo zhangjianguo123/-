@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<ul class="classs" id="box" name="names">
+		<li class="one" id="one">1</li>
+		<li class="one">2</li>
+		<li>3</li>
+		<li>4</li>
+	</ul>
+	<div class="classs"></div>
+	<script>
+		// 第一种方式  id获取
+		// let box = document.getElementById('box')
+		// console.log(box);
+		
+		// 第二种 返回names下的数组，下标0为获取的当前数据
+		// let box = document.getElementsByName('names')
+		// console.log(box);
+		
+		// 第三种 标签获取下的数组，下标0为获取的当前数据
+		// let box = document.getElementsByTagName('ul')
+		// console.log(box);
+		
+		// 第四种 class类名获取下的数组，下标0为获取的当前数据
+		// let box = document.getElementsByClassName('classs')
+		// console.log(box);
+		
+		// 第五种 获取html
+		// let box= document.documentElement
+		// console.log(box);
+		
+		// 第六种 获取body
+		// let box = document.body
+		// console.log(box);
+		
+		// 第七种 匹配第一个选择的元素
+		// let box = document.querySelector('li')
+		// console.log(box);
+		
+		// 第八种 获取全部匹配的元素的元素
+		// let box = document.querySelectorAll('.one')
+		// console.log(box);
+		
+		
+		
+		/* 获取子节点 */
+		let box = document.querySelector('ul')
+		console.log(box);
+		// 获取第一个子节点
+		console.log('获取第一个文档子节点', box.firstChild);
+		console.log('获取最后一个文档子节点', box.lastChild);
+		console.log('获取第一个元素子节点', box.firstElementChild);
+		console.log('获取最后一个元素子节点', box.lastElementChild);
+	</script>
+</body>
+</html>

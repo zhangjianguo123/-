@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<style>
+		#box {
+			width: 300px;
+			height: 300px;
+			border: 1px solid red;
+		}
+		#son {
+			width: 50px;
+			height: 50px;
+			background-color: blue;
+		}
+		
+		/* 第一种方法flex */
+	/* 	#box {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		} */
+		
+		
+		
+		/* 第二种方法 margin transform */
+	/* 	#son {
+			margin: 50% auto;
+			transform: translateY(-50%);
+		} */
+		
+		/* 第三种定位 position + margin */
+/* 		#box {
+			position: relative;
+		}
+		#son {
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+		} */
+		
+		
+		/*  第四种 position + transform*/
+		/* #box {
+			position: relative;
+		}
+		#son {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		} */
+		
+		/* 第五种 grid布局 */
+	/* 	#box {
+			display: grid;
+			justify-items: center;
+			align-items: center;
+		} */
+		
+		/* 第六种：利用text-algin:center水平居中，给父级添加满级行高，让子元素改变为行内块，
+		 利用vertical-align: middle让元素中间和文字基线对齐
+		 */
+		/* #box {
+			text-align: center;
+			line-height: 300px;
+		}
+		#son {
+			display: inline-block;
+			vertical-align: middle;
+		} */
+		
+		/* 第七种： display: table-cell; */
+	/* 	#box {
+			display: table-cell;
+			vertical-align: middle;
+		}
+		#son {
+			margin: 0 auto;
+		} */
+/* 		#box {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+		}
+		#son {
+			display: inline-block;
+		} */
+	</style>
+	<div id="box">
+		<div id="son"></div>
+	</div>
+</body>
+</html>

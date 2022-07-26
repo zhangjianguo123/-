@@ -7,41 +7,60 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        body {
-            padding: 0;
-            margin: 0;
-            width: 100vw;
-            height: 100vh;
-        }
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		html, body {
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
         #box {
             width: 300px;
-            height: 100vh;
+            height: 800px;
             float: left;
             background-color: pink;
         }
         #right {
-            /*overflow: hidden;*/
-            height: 100%;
-            width: 800px;
-            float: right;
+            overflow: hidden;
+            height:800px;
             background-color: blue;
         }
-        div {
-            overflow: hidden;
-        }
+		.text {
+			width: 150px;
+			height: 150px;
+			background-color: red;
+		}
     </style>
 </head>
 <body>
 <div id="box"></div>
 <div id="right"></div>
-<div>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
+<div class="text">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
 <!--<script src="./Js/settimeout.js"></script>-->
-<script src="./Js/deep.js"></script>
+<!-- <script src="./Js/deep.js"></script> -->
 <!--<script>-->
 <!--    let a = (function (v) {-->
 <!--        console.log('v', v)-->
 <!--    })(3)-->
 <!--    console.log("aaaaaa", a)-->
 <!--</script>-->
+
+<script>
+	
+var resolvedPromisesArray = [Promise.resolve(33), Promise.resolve(44)];
+
+var p = Promise.all(resolvedPromisesArray);
+// immediately logging the value of p
+console.log(p);
+
+// using setTimeout we can execute code after the stack is empty
+setTimeout(function(){
+    console.log('the stack is now empty');
+    console.log(p);
+});
+
+</script>
 </body>
 </html>

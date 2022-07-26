@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="ulT">
+        <li class="item1">fsda</li>
+        <li class="item2">ewre</li>
+        <li class="item3">qewe</li>
+        <li class="item4">xvc</li>
+        <li class="item5">134</li>
+        </ul>
+    <script type="text/javascript">
+        document.getElementById("ulT").onclick = function  (event) {
+        console.log(event.target);
+        console.log(event.currentTarget);
+        }
+        document.querySelector('.item1').onclick = function(event) {
+        console.log('第二个', event.target);
+        console.log('第二个', event.currentTarget);
+        }
+    </script>
+</body>
+</html>

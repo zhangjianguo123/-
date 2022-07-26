@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<style>
+	/* 		
+			外边距重叠
+			#box, #box1 {
+				width: 300px;
+				height: 200px;
+				border: 1px solid red;
+				margin: 50px 0;
+			}
+			#box {
+				display: inline-block;
+			} */
+			
+	/* 		#box {
+				width: 300px;
+				height: 200px;
+				border: 1px solid red;
+				margin-bottom: 50px;
+			} */
+			
+		      .box1 {
+		            width: 150px;
+		            height: 100px;
+		            margin-top: 20px; 
+		            /* border: 1px solid #000000; */
+					/* display: inline-block; */
+					/* overflow: hidden; */
+					/* float: left; */
+		            background-color: red;
+		        }
+		 
+		        .box2 {
+		            width: 100px;
+		            height: 100px;
+		            /* border: 1px solid #000000; */
+		            background-color: rebeccapurple;
+		            margin-top: 10px;
+		        }
+			
+		</style>
+		
+		<!-- 首先BFC解决的问题：
+		 1 、外边距重叠
+		 
+		 -->
+	<!-- 	<div id="box"></div>
+		<div id="box1">
+			<div id="son"></div>
+		</div>
+		 -->
+		<div class="box1">
+		        <div class="box2"></div>
+		    </div>
+	</body>
+</html>

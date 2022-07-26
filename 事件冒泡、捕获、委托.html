@@ -34,8 +34,12 @@
     </div>
     <script>
         // js事件执行机制，从捕获、触发阶段、冒泡
-        // 为元素添添加addEventListenet监听事件，参数1为监听的事件名称、参数2为执行的函数、参数3为触发时机，默认为false。true为捕获阶段触发，false为冒泡阶段触发
-        // 事件委托，在父级元素上注册事件，拿到父级元素e，标准浏览器用ev.target，IE浏览器用event.srcElement，此时只是获取了当前节点的位置，并不知道是什么节点名称，这里我们用nodeName来获取具体是什么标签名，这个返回的是一个大写的，我们需要转成小写再做比较toLowerCase()
+        // 为元素添添加addEventListenet监听事件，参数1为监听的事件名称、
+		// 参数2为执行的函数、参数3为触发时机，默认为false。true为捕获阶段触发，false为冒泡阶段触发
+        // 事件委托，在父级元素上注册事件，拿到父级元素e，标准浏览器用ev.target，
+		// IE浏览器用event.srcElement，此时只是获取了当前节点的位置，并不知道是什么节点名称，
+		// 这里我们用nodeName来获取具体是什么标签名，这个返回的是一个大写的，
+		// 我们需要转成小写再做比较toLowerCase()
         let parent = document.getElementsByClassName("parent")[0]
         let son = document.getElementsByClassName("son")[0]
         parent.onclick = function (event) {

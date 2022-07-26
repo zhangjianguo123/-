@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html, body {
+			height: 100%;
+		}
+		#box {
+			height: 100%;
+			display: grid;
+			 grid-template-columns: repeat(auto-fill, 150px);
+			grid-template-rows:repeat(3,60px);
+			/* grid-template-columns: 10% auto 10%; */
+			/* grid-template-columns: repeat(4,60px) */
+		}
+		div	 {
+			border: 1px solid yellow;
+			box-sizing: border-box;
+		}
+		.left, .right {
+			background-color: aqua;
+		}
+		 .right {
+			background-color: blue;
+		}
+		.center {
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div class="left">的模块是否是分电视剧佛山大家否的说法都是佛罗贫困生</div>
+		<div class="center">没及时的反馈</div>
+		<div class="right"></div>
+		<div class="left"></div>
+		<div class="center"></div>
+		<div class="right"></div>
+		<div class="left"></div>
+		<div class="center"></div>
+		<div class="right"></div>
+		<div class="left"></div>
+		<div class="center"></div>
+		<div class="right"></div>
+	</div>
+</body>
+</html>

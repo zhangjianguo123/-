@@ -94,8 +94,8 @@
 			// console.log(nameStr1, nameStr2, ageStr1, ageStr2)
 			// sunshine_lin是个大菜鸟 sunshine_lin是个小天才 18岁已经算很老了 18岁还算很年轻啊
 			
-			const person = reactive({ name: '林三心', age: 22 })
-			const animal = reactive({ type: 'dog', height: 50 })
+			const person = reactive({ name: '林三心', age: 22 , obj: {id: 66}})
+			const animal = reactive({ type: 'dog', height: 50 ,obj: {id: 989} })
 			let callbackCopy
 			
 			const MyWeakMap = new WeakMap()
@@ -109,7 +109,7 @@
 			let heightStr1 = ''
 			let heightStr2 = ''
 			
-			const effectNameStr1 = () => { nameStr1 = `${person.name}是个大菜鸟` }
+			const effectNameStr1 = () => { nameStr1 = `${person.name}是个大菜鸟${person.obj.id}` }
 			const effectNameStr2 = () => { nameStr2 = `${person.name}是个小天才` }
 			const effectAgeStr1 = () => { ageStr1 = `${person.age}岁已经算很老了` }
 			const effectAgeStr2 = () => { ageStr2 = `${person.age}岁还算很年轻啊` }
@@ -121,7 +121,7 @@
 			
 			
 			function track(target, key) {
-				// console.log('打印一下', callbackCopy);
+				console.log('打印一下',target,'++++', key);
 				if(!callbackCopy) return
 				let newWeakMap = MyWeakMap.get(target)
 				if(!newWeakMap) {
@@ -184,6 +184,7 @@
 			person.age = 18
 			animal.type = '猫'
 			animal.height = 20
+			person.obj.id = 44
 			// trigger(person, 'name')
 			// trigger(person, 'age')
 			// trigger(animal, 'type')

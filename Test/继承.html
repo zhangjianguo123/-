@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let count = 0
+        function Parent(p) {
+            count++
+            this.age = p
+            this.name = "父级",
+            this.list = [1, 2, 3, 4]
+        }
+        Parent.prototype.say = function(val = '') {
+            console.log(val + this.name);
+        }
+        function Son(v) {
+            this.name = '子级'
+            Parent.call(this, v)
+        }
+
+        // 第六种：寄生式组合继承
+        function assginObj(parent, son) {
+            let f = Object.create(parent.prototype)
+            f.constructor = son
+            son.prototype = Object.assign(son.prototype, f)
+            f = null
+        }
+        Son.prototype.sonHandle = function() {}
+        assginObj(Parent, Son)
+        let a = new Son(66)
+        let b = new Son(77)
+
+        console.log('第一种', a, '第二种', b);
+
+
+
+
+
+
+        // 第五种：寄生式继承
+        // 可以向父级传参，也不会改变复杂类型
+        // 缺点： 给当前构造函数添加原型无用
+        // function Son(v) {
+        //     let f =  Object.create(new Parent(99))
+        //     f.name = '子级'
+        //     return f
+        // }
+        // let five = new Son(99)
+        // let fiveS = new Son(100)
+        // Son.prototype =function () {}
+        // five.list.push(5)
+        // fiveS.say('第二天中')
+        // console.log('第一种', five, '第二种', fiveS);
+
+
+
+        //第四种：原型继承
+        // 修改复杂类型会更改其他实例的数据
+        // 无法向父级传参
+        // Son.prototype = Object.create(new Parent())
+        // const four = new Son()
+        // const fours = new Son()
+        // four.list.push(5)
+        // console.log('第一种', four, '第二种', fours);
+
+
+
+
+        //第三种：组合式继承
+        //  解决了前两种问题，
+        //  缺点：创建实例会调用两次构造函数
+        // function Son(v) {
+        //     this.name = '子级'
+        //     Parent.call(this, v)
+        // }
+
+        // Son.prototype = new Parent()
+        // const three = new Son(99)
+        // const threes = new Son(100)
+        // three.list.push(5)
+        // threes.say('第二种')
+        // console.log('第一种', three,'第二种', threes, count);
+
+
+        // 第二种: 构造函数继承
+        // 可以向父级构造函数传递参数
+        // 改变引用类型也不会改变其他实例
+        // 缺点：无法继承父级原型的属性
+        // function Son(v) {
+        //     this.name = '子级'
+        //     Parent.call(this, v)
+        // }
+
+        // let Two = new Son(26)
+        // let Twos = new Son(17)
+        // Two.list.push(5)
+        // console.log('第一种',Two, '第二种', Twos);
+
+
+        // 第一种继承：原型链继承 
+        // 缺点：创建实例时，无法想父级构造函数传递参数；引用类型一旦被修改，其他实例也会被修改
+        // Son.prototype = new Parent()
+        // let one = new Son()
+        // let oneS = new Son()
+
+        // one.list.push(5)
+        // one.say('第一种')
+        // console.log('第一种', one, '第二种',oneS);
+    </script>
+</body>
+</html>

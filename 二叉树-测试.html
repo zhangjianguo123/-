@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        var root = ['A', 'B', 'C', ];
+        // let rootDom = root.splice(0,1)
+        // console.log(rootDom);
+        function calc(root) {
+            let list = []
+            let count = 1
+            let rootObj = {}
+            let value
+            let flag = null
+            while(root.length) {
+                value = root.splice(0,count)
+                if(flag) {
+                    console.log('Dayin',flag, rootObj);
+                   
+                }
+                value.forEach(element => {
+                    rootObj[element] = { left:{}, right: {}}
+                });
+                list.push(rootObj)
+                flag = value
+                count *= 2
+            }
+            console.log(rootObj, list);
+        }
+        calc(root)
+
+    </script>
+</body>
+</html>

@@ -71,11 +71,30 @@
         function fn (a, b, c, d) {
             return a + b + c + d
         }
+		
+		
+		function that(fn, ...val)  {
+			let len = fn.length
+			let par = val || []
+			console.log('mjjj', len,'==========', par);
+			return function(...arg) {
+				par.push(...arg)
+				if(par.length < len) {
+					return that(fn, ...par)
+				} else {
+					return fn(...par)
+				}
+			}
+		}
+		
+		let b = that(fn, 1)
+		let c = b(2)(3)(4)
+		console.log('bbb', b,'----------',  c);
 
         function cloneFun (fn, ...val) {
             let len = fn.length
             let arg = val || []
-            let newfun = function (...param) {
+            return function (...param) {
                 arg.push(...param)
                 if (arg.length < len) {
                     return cloneFun(fn, ...arg)
@@ -83,10 +102,9 @@
                     return fn(...arg)
                 }
             }
-            return newfun
         }
-        let a = cloneFun(fn)
-        console.log("就是他", a(1, 2, 3)(4))
+        // let a = cloneFun(fn)
+        // console.log("就是他", a(1, 2, 3)(4))
     </script>
 </body>
 

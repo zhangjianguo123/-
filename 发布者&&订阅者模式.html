@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+ 
+<body>
+  <script>
+    class Event {
+      constructor() {
+        this.eventList = {}
+      }
+      $on = function(name, cb) {
+        if(!this.eventList[name]) {
+          this.eventList[name] = []
+        }
+        this.eventList[name].push(cb)
+      }
+      $emit = function(name, value) {
+        setTimeout(() => {
+          if(!this.eventList[name]) {
+           throw '您提交的事件未在调度中心注册'
+        }
+          this.eventList[name].forEach(element => {
+          element(value)
+          });
+        })
+      }
+    }
+
+    let event = new Event()
+
+    event.$emit('change', {id: 5, name: '真假'})
+    event.$on('change',(v) => {
+      console.log('我订阅了', v);
+    })
+    event.$emit('click', {id: 5, name: '真假'})
+    console.log('打印', event);
+  </script>
+  <script>
+  //   function Event() {
+	// 	this.clientlist = {}
+  //     // $on 用来订阅事件,因为$on可以使用多次,所以需要将$on的事件和事件函数进行记录
+ 
+  //     // eventName: 事件名
+  //     // callback: 事件回调
+  //     this.$on = function (eventName, callback) {
+  //       // 先判断记录的数据中是否存在该事件
+  //       if (!this.clientlist[eventName]) {
+  //         // 如果不存在 添加该事件 值用数组记录(因为,同一个事件可以注册多次)
+  //         this.clientlist[eventName] = [callback]
+  //       } else {
+  //         // 如果存在 找到该事件,给该事件的数组追加回调
+  //         this.clientlist[eventName].push(callback)
+  //       }
+  //     }
+ 
+  //     // eventName: 事件名
+  //     // val: 给该事件传递的数据
+  //     this.$emit = function (eventName, val) {
+  //       // 先判断该事件是否有记录,有记录,代表用过$on订阅注册事件
+  //       if (!this.clientlist[eventName]) {
+  //         return false
+  //       }
+  //       // 有事件
+  //       // 将clientlist中对应的事件找到获取到回调数组
+  //       // 循环回调数组
+	// 	console.log('多杀破', this.clientlist);
+  //       this.clientlist[eventName].forEach((callback) => {
+	// 		console.log('擦了', callback);
+  //         // 调用回调将emit传递过来的数据传递给事件回调
+  //         callback(val)
+  //       })
+  //     }
+  //   }
+ 
+  //   const event = new Event()
+	// console.log('nimad ', event);
+ 
+  //   // 订阅事件
+  //   event.$on('onGetMsg', function (msg) {
+  //     console.log(msg)
+  //   })
+ 
+  //   event.$on('onGetMsg', function (msg) {
+  //     console.log(msg)
+  //   })
+	
+	// event.$on('click', (value) => {
+	// 	console.log('打印一下这个', value);
+	// })
+  //   // console.log(event.clientlist)
+  //   event.$emit('onGetMsg', { color: 'red' })
+	
+	// event.$emit('click', {name: 'zhang'})
+  </script>
+</body>
+ 
+</html>

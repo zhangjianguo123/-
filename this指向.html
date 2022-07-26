@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 1 全局this
+        // console.log('全局', this);
+
+        // 2、 对象中的this
+         var a= 2
+        let obj = {
+            a: 1,
+            b: this.a, // this指向上一层this类似箭头函数的this
+            c:function() {
+                console.log(this.a);
+            },
+            d: {
+                e: this.a
+            },
+            f: {
+                h: 66,
+                g: function() {
+                    console.log(this);
+                    setTimeout(() => {
+                        console.log('定时器的this', this);
+                    })
+                }
+            }
+        }
+        console.log(obj.f.g());
+    </script>
+</body>
+</html>

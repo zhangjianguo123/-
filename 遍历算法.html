@@ -117,48 +117,56 @@
 
 
     //    扁平化
-    let lists = [[1,85, 2,120, 2, 52], [98, 3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];
+    let lists = [88,98,[1,85, 2,120, 2, 52], [98, 3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];
+    //  快速扁平化
+    // let fns = (list) => list.reduce((v, p) => Array.isArray(p) ? [...v, ...fns(p)] : [...v, p], [])
 
-    function sort(list) {
-        let arr = new Set()
-        while (list.length) {
-            let newA = list.splice(0, 1)
-            if (typeof newA[0] === 'object') {
-                newA[0].forEach(v => {
-                    console.log(v)
-                    if (typeof v === 'object') {
-                        lists.push(v)
-                    } else {
-                        arr.add(v)
-                    }
-                })
-            } else {
-                arr.add(newA[0])
-            }
-        }
-        let setArr = [...arr]
-        for (let i = 0; i < setArr.length - 1; i++) {
-            console.log('撒旦撒记录')
-            let show = true
-            for (let j = 0; j < setArr.length; j++) {
-                if (setArr[j] > setArr[j + 1]) {
-                    let flag = setArr[j]
-                    setArr[j] = setArr[j + 1]
-                    setArr[j + 1] = flag
-                    show = false
-                }
-            }
-            if(show) {
-                console.log('到几结束了', i)
-                break
-            }
+    // 快速扁平化 +  去重 + 排序
+    let tests = (list) => list.reduce((v, p) => Array.isArray(p) ? Object.assign(v, tests(p)) : Object.assign(v, v[p] = p), {})
 
-        }
-        console.log(setArr)
+    console.log('好；了么', Object.values(tests(lists)));
 
-    }
 
-    sort(lists)
+
+    // function sort(list) {
+    //     let arr = new Set()
+    //     while (list.length) {
+    //         let newA = list.splice(0, 1)
+    //         if (typeof newA[0] === 'object') {
+    //             newA[0].forEach(v => {
+    //                 console.log(v)
+    //                 if (typeof v === 'object') {
+    //                     lists.push(v)
+    //                 } else {
+    //                     arr.add(v)
+    //                 }
+    //             })
+    //         } else {
+    //             arr.add(newA[0])
+    //         }
+    //     }
+    //     let setArr = [...arr]
+    //     for (let i = 0; i < setArr.length - 1; i++) {
+    //         console.log('撒旦撒记录')
+    //         let show = true
+    //         for (let j = 0; j < setArr.length; j++) {
+    //             if (setArr[j] > setArr[j + 1]) {
+    //                 let flag = setArr[j]
+    //                 setArr[j] = setArr[j + 1]
+    //                 setArr[j + 1] = flag
+    //                 show = false
+    //             }
+    //         }
+    //         if(show) {
+    //             console.log('到几结束了', i)
+    //             break
+    //         }
+
+    //     }
+    //     console.log(setArr)
+    // }
+
+    // sort(lists)
 </script>
 </body>
 
