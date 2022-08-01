@@ -26,12 +26,15 @@
         // 第六种：寄生式组合继承
         function assginObj(parent, son) {
             let f = Object.create(parent.prototype)
+            console.log('f', f, typeof f);
             f.constructor = son
-            son.prototype = Object.assign(son.prototype, f)
+            son.prototype = f
             f = null
         }
-        Son.prototype.sonHandle = function() {}
         assginObj(Parent, Son)
+
+        Son.prototype.sonHandle = function() {} 
+
         let a = new Son(66)
         let b = new Son(77)
 
@@ -114,3 +117,11 @@
     </script>
 </body>
 </html>
+
+
+<!-- 原型链继承： 子级构造函数的prototype = 父级的实例，不能向父级传递参数，并且复杂类型的值共享 -->
+<!-- 构造函数继承： 在子级构造函数中调用call，将父级的this指向子级构造函数的this，可以向父级传递构造函数，并且数据也不会共享，但无法继承父级构造函数中的prototype -->
+<!-- 组合式继承：子级构造函数借用call， 然后让子级prototype = 父级实例，这样虽然可以解决前面两个问题，但却调用了父级构造函数两次 -->
+<!-- 原型式继承： 让父级的Object.create(父级实例) = 子级的prototype， 无法传递参数，并且数据会共享 -->
+<!-- 寄生式继承： 在自己构造函数中，用Object.create(父级实例)创建一个对象，然后return这个对象，可以解决传参的问题，也不会数据共享， 但无法为当前子级构造函数添加原型属性 -->
+<!-- 寄生组合式继承：在自己构造函数中借用call，将父级构造函数的this指向子级构造函数的this， 然后创建一个fun，将父级构造函数和子级构造函数传入，利用Object.create(父级构造函数的原型),然后将创造出来的对象的constructor指向参数子构造函数， 然后子构造函数的prototype = 这个对象 -->
