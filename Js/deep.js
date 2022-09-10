@@ -58,3 +58,4 @@ let a = Fun("第一次")
 a.say('say第二个').say('say第三个').deep(3).unshiftS('跑到最前面').say('再来一个').unshiftS('跑到最前面1')
 console.log('%c>>>>>>>>>>>>>', 'color:red;','大江哈斯');
 console.log('%c>>>>>>>>>>>>>', 'color:red;', '再来一遍');
+
