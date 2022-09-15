@@ -1,62 +1,100 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-		<style>
-	/* 		
-			外边距重叠
-			#box, #box1 {
-				width: 300px;
-				height: 200px;
-				border: 1px solid red;
-				margin: 50px 0;
-			}
-			#box {
-				display: inline-block;
-			} */
-			
-	/* 		#box {
-				width: 300px;
-				height: 200px;
-				border: 1px solid red;
-				margin-bottom: 50px;
-			} */
-			
-		      .box1 {
-		            width: 150px;
-		            height: 100px;
-		            margin-top: 20px; 
-		            /* border: 1px solid #000000; */
-					/* display: inline-block; */
-					/* overflow: hidden; */
-					/* float: left; */
-		            background-color: red;
-		        }
-		 
-		        .box2 {
-		            width: 100px;
-		            height: 100px;
-		            /* border: 1px solid #000000; */
-		            background-color: rebeccapurple;
-		            margin-top: 10px;
-		        }
-			
-		</style>
-		
-		<!-- 首先BFC解决的问题：
-		 1 、外边距重叠
-		 
-		 -->
-	<!-- 	<div id="box"></div>
-		<div id="box1">
-			<div id="son"></div>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<style>
+		html * {
+			padding: 0;
+			margin: 0;
+		}
+		body {
+			overflow: scroll;
+		}
+
+		#sec {
+			background: #f00;
+			overflow: hidden;
+			position: relative;
+			/* margin: 30px; */
+		}
+
+		.child {
+			overflow: scroll;
+			height: 100px;
+			width: 110%;
+			/* margin: 10px 0; */
+			background: yellow;
+			padding: 15px;
+			border: 1px solid lawngreen;
+		}
+
+		.childs {
+			/* padding: 20px; */
+			height: 100px;
+			margin: 10px 0;
+			background: green;
+		}
+
+		.chi {
+			height: 100%;
+			width: 100%;
+			margin: 30px 0;
+		}
+	</style>
+	<!-- <div id="sec">
+		<div class="childs" style="position: relative;">
+			<div style="position: relative;"></div>
+			<div class="child"></div>
 		</div>
-		 -->
-		<div class="box1">
-		        <div class="box2"></div>
-		    </div>
-	</body>
+		</div> -->
+		<div class="child">
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+			<div>22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+		</div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<div class="child"></div>
+		<script>
+			let d = document.getElementsByClassName('child')[0]
+			let body = document.body
+		// offsetHeight 获取元素的全部高度，包含内容、padding、border
+		// offsetWidth  获取元的全部宽度 包含内容、padding、border
+		// clientHeight 获取元素的实体高度，包含内容、padding
+		// clientWidth  获取元素的实体宽度，包含内容、padding
+		// offsetParent 获取元素已进行过CSS定位(relative、absolute、fixed)的容器元素
+		// offsetLeft 获取元素距离父级元素左侧的距离
+		// offsetTop 获取元素距离父级元素顶部的距离
+		// scrollHeight 获取元素可滚动的高度
+		// scrollWidth 获取元素可滚动的宽度
+		// scrollbarWidth = d.offsetWidth - d.clientWidth 当前元素全部高度 - 元素内容高度，body除外
+		// scrollTop 获取滚动条距离顶部的距离
+		// scrollLeft 获取滚动条距离左侧的距离
+		// getBoundingClientRect获取的height和width 与 offsetHeight 和 offsetWidth 的计算相同
+
+		
+		</script>
+</body>
+
 </html>
