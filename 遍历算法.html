@@ -9,122 +9,122 @@
 </head>
 
 <body>
-<script>
-    let arr = [
-        {
-            id: 1,
-            pid: 0,
-            children: [
-                {
-                    id: 10,
-                    pid: 1,
-                    children: [
-                        {
-                            id: 100,
-                            pid: 10
-                        },
-                        {
-                            id: 101,
-                            pid: 10
-                        }
-                    ],
+    <script>
+        let arr = [
+            {
+                id: 1,
+                pid: 0,
+                children: [
+                    {
+                        id: 10,
+                        pid: 1,
+                        children: [
+                            {
+                                id: 100,
+                                pid: 10
+                            },
+                            {
+                                id: 101,
+                                pid: 10
+                            }
+                        ],
 
-                },
-                {
-                    id: 11,
-                    pid: 1
-                }
-            ]
-        },
-        {
-            id: 2,
-            pid: 0,
-            children: [
-                {
-                    id: 20,
-                    pid: 2,
-                    children: [
-                        {
-                            id: 200,
-                            pid: 20
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            id: 3,
-            pid: 0,
-            children: [
-                {
-                    id: 30,
-                    pid: 3
-                }
-            ]
-        },
-        {
-            id: 4,
-            pid: 0
-        }
-    ]
-    let list = JSON.parse(JSON.stringify(arr))
-
-    //  深度优先遍历: 递归遍历
-    function fn(arr, newarr) {
-        if (Object.prototype.toString.call(arr) !== "[object Array]") return
-        arr.forEach(element => {
-            newarr.push(element.id)
-            if (element.children) {
-                fn(element.children, newarr)
+                    },
+                    {
+                        id: 11,
+                        pid: 1
+                    }
+                ]
+            },
+            {
+                id: 2,
+                pid: 0,
+                children: [
+                    {
+                        id: 20,
+                        pid: 2,
+                        children: [
+                            {
+                                id: 200,
+                                pid: 20
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                pid: 0,
+                children: [
+                    {
+                        id: 30,
+                        pid: 3
+                    }
+                ]
+            },
+            {
+                id: 4,
+                pid: 0
             }
-        });
-    }
+        ]
+        let list = JSON.parse(JSON.stringify(arr))
 
-    let newarr = []
-    fn(arr, newarr)
-    console.log("第一种结果id", newarr)
-
-    // 深度优先遍历：非递归遍历
-
-    function one(arr) {
-        let result = []
-        while (arr.length) {
-            let item = arr.shift()
-            if (item.children) {
-                arr.unshift(...item.children)
-            }
-            result.push(item.id)
+        //  深度优先遍历: 递归遍历
+        function fn(arr, newarr) {
+            if (Object.prototype.toString.call(arr) !== "[object Array]") return
+            arr.forEach(element => {
+                newarr.push(element.id)
+                if (element.children) {
+                    fn(element.children, newarr)
+                }
+            });
         }
-        console.log("这是结果", result);
-    }
 
-    one(arr)
+        let newarr = []
+        fn(arr, newarr)
+        console.log("第一种结果id", newarr)
 
-    // 广度优先遍历
-    function Two(arr) {
-        let result = []
-        while (arr.length) {
-            let item = arr.shift()
-            if (item.children) {
-                arr.push(...item.children)
+        // 深度优先遍历：非递归遍历
+
+        function one(arr) {
+            let result = []
+            while (arr.length) {
+                let item = arr.shift()
+                if (item.children) {
+                    arr.unshift(...item.children)
+                }
+                result.push(item.id)
             }
-            result.push(item.id)
+            console.log("这是结果", result);
         }
-        console.log("这是第三种", result);
-    }
 
-    Two(list)
+        one(arr)
+
+        // 广度优先遍历
+        function Two(arr) {
+            let result = []
+            while (arr.length) {
+                let item = arr.shift()
+                if (item.children) {
+                    arr.push(...item.children)
+                }
+                result.push(item.id)
+            }
+            console.log("这是第三种", result);
+        }
+
+        Two(list)
 
 
-    //    扁平化
-    let lists = [88,98,[1,85, 2,120, 2, 52], [98, 3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];
-    //  快速扁平化
-    // let fns = (list) => list.reduce((v, p) => Array.isArray(p) ? [...v, ...fns(p)] : [...v, p], [])
+        //    扁平化
+        let lists = [88, 98, [1, 85, 2, 120, 2, 52], [98, 3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];
+        //  快速扁平化
+        // let fns = (list) => list.reduce((v, p) => Array.isArray(p) ? [...v, ...fns(p)] : [...v, p], [])
 
-    // 快速扁平化 +  去重 + 排序
-    let tests = (list) => list.reduce((v, p) => Array.isArray(p) ? Object.assign(v, tests(p)) : Object.assign(v, v[p] = p), {})
+        // 快速扁平化 +  去重 + 排序
+        let tests = (list) => list.reduce((v, p) => Array.isArray(p) ? Object.assign(v, tests(p)) : Object.assign(v, v[p] = p), {})
 
-    console.log('好；了么', Object.values(tests(lists)));
+        console.log('好；了么', Object.values(tests(lists)));
 
 
 
@@ -167,7 +167,7 @@
     // }
 
     // sort(lists)
-</script>
+    </script>
 </body>
 
 </html>

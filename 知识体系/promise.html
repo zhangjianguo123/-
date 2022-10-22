@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const Promise1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('成功')
+            }, 2000)
+        })
+        const Promise2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject('失败了')
+            }, 100)
+        })
+        const Promise3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('成功3')
+            }, 1500)
+        })
+
+        async function promiseFun() {
+            // 全部成功返回，如果有一个失败就返回失败
+            // try {
+            //     const res = await Promise.all([Promise1, Promise2])
+            // } catch (error) {
+            //     console.log('%c>>>>>>>>>>>>>', 'color:red;', error);
+            // }
+
+            //  allSettled不管给定的数组中是否全部成功或者失败，只要全部状态改变，就返回结果
+            // const res1 = await Promise.allSettled([Promise1, Promise2])
+
+            // race永远返回第一个，不管是成功还是失败的
+            // const res2 = await Promise.race([Promise1, Promise2])
+
+            // any永远返回第一个成功的状态, 所有失败就会产生拒绝状态
+            const res3 = await Promise.any([Promise1, Promise2, Promise3])
+            console.log('%c>>>>>>>>>>>>>', 'color:red;', res3);
+        }
+        promiseFun()
+    </script>
+</body>
+
+</html>

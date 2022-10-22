@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let count = 0
+        function Parent(name) {
+            count++
+            console.log('%c>>>>>>>>>>>>>', 'color:red;', '传递的参数', name);
+            this.name = name
+            this.age = 26
+            this.list = [1, 2, 3]
+            this.obj = {
+                option: ['你好', '初次', '见面']
+            }
+        }
+        Parent.prototype.say = () => {
+            console.log(this.name, '++++++', this.age);
+        }
+
+        // 第二种,解决第一种所有问题，但
+        function Son(...rest) {
+            this.gender = '男'
+            Parent.apply(this, rest)
+        }
+        Son.prototype = new Parent()
+        const a = new Son('李四')
+        const a1 = new Son('王五')
+        const a2 = new Son('666')
+        a.list.splice(0, 1)
+        a1.obj.option[0] = '见面了'
+        console.log('%c>>>>>>>>>>>>>', 'color:red;', a, a1, count);
+
+
+
+
+        // 第一种，可以继承父类的属性和方法，但修改引用类型的值会影响其他，并且创建实例时，无法向继承的父类传递参数
+        // function Son() {
+        //     this.gender = '男'
+        // }
+        // Son.prototype = new Parent()
+        // const a = new Son()
+        // a.list.splice(0, 1)
+        // const a1 = new Son()
+        // a1.obj.option[0] = '不好'
+        // console.log('%c>>>>>>>>>>>>>', 'color:red;', a, a1);
+    </script>
+</body>
+
+</html>

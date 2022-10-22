@@ -68,30 +68,30 @@
         // let sum = curryAdd(3)(5);    // 14
         // console.log("第三种", sum)
 
-        function fn (a, b, c, d) {
+        function fn(a, b, c, d) {
             return a + b + c + d
         }
-		
-		
-		function that(fn, ...val)  {
-			let len = fn.length
-			let par = val || []
-			console.log('mjjj', len,'==========', par);
-			return function(...arg) {
-				par.push(...arg)
-				if(par.length < len) {
-					return that(fn, ...par)
-				} else {
-					return fn(...par)
-				}
-			}
-		}
-		
-		let b = that(fn, 1)
-		let c = b(2)(3)(4)
-		console.log('bbb', b,'----------',  c);
 
-        function cloneFun (fn, ...val) {
+
+        function that(fn, ...val) {
+            let len = fn.length
+            let par = val || []
+            console.log('mjjj', len, '==========', par);
+            return function (...arg) {
+                par.push(...arg)
+                if (par.length < len) {
+                    return that(fn, ...par)
+                } else {
+                    return fn(...par)
+                }
+            }
+        }
+
+        let b = that(fn, 1)
+        let c = b(2)(3)(4)
+        console.log('bbb', b, '----------', c);
+
+        function cloneFun(fn, ...val) {
             let len = fn.length
             let arg = val || []
             return function (...param) {

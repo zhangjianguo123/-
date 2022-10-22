@@ -2,230 +2,129 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
 
 <body>
-    <script>
-        function Parent (name, age) {
-            this.name = name
-            this.age = age
-            this.cat = "黑猫"
-            this.arr = [1, 2, 3]
-        }
-        Parent.prototype.say = function () {
-            console.log('父级原型添加方法', this.cat)
-        }
-		Parent.prototype.list = ['小猫', '小狗', '小猪']
-		
-		// console.log(new Parent);
-		let perent = {
-			id: 5,
-			arr: [1,2,3,4]
+	<script>
+		let count = 0
+		function Parent(p) {
+			count++
+			this.age = p
+			this.name = "父级",
+				this.list = [1, 2, 3, 4]
 		}
-		
-		// 1、原型链
-		// function One() {}
-		// One.prototype = new Parent()
-		// let ones = new One()
-		
-		// console.log('原型链继承', ones);
-		
-		/* 2构造函数: 无法继承原型上的方法 */
-		
-		// function Two() {
-		// 	this.name = '呜呜'
-		// 	Parent.call(this, 'two', '99')
-		// }
-		
-		// let two = new Two()
-		// two.arr.push(999)
-		// let twos = new Two()
-		// console.log('two', two, twos);
-		
-		/* 3组合继承 */
-		
-		// function Three() {
-		// 	Parent.call(this,'three', 333)
-		// 	this.three = '哈哈hi'
-		// }
+		Parent.prototype.say = function (val = '') {
+			console.log(val + this.name);
+		}
+		function Son(v) {
+			this.name = '子级'
+			Parent.call(this, v)
+		}
 
-		// // Three.prototype = Parent.prototype
-		// Three.prototype = new Parent()
-		// Three.prototype.constructor  = Three
-		// Three.prototype.fn = function() {
-		// 	console.log(this.three);
-		// }
-		// let three = new Three()
-		// three.list.push('杀掉')
-		// let threes = new Parent()
-		// console.log('这是啥',three , threes);
-		
-		/* 4： 原型式继承： 修改会牵连其他实例 */
-		
-		// function Son() {
-		// 	this.son = 548
-		// }
-		// Son.prototype = Object.create(new Parent())
-		// Son.prototype.fn = function() {
-		// 	console.log(this.son);
-		// }
-		// let four = new Son()
-		// four.arr.push('东方搜颗粒剂')
-		// let fours= new Son()
-		// console.log(four, fours);
-		
-		/* 5寄生继承: 用一个函数来增加对象,并且无法为继承元素添加prototype属性 */
-		// function Son() {
-		// 	let F = Object.create(new Parent())
-		// 	console.log('返回了', F);
-		// 	F.fn = function() {console.log(this.arr)}
-		// 	return F
-		// }
-		// Son.prototype.post= function(){
-		// 	console.log('就OK');
-		// }
-		// let sons = new Son()
-		// sons.arr.push(5565)
-		// let sona = new Son()
-		
-		// console.log(sons, sona,);
-		
-		
-		/* 6寄生组合继承 */
-		 function Lu() {
-			 this.name = 'lu'
-		 }
-		 function Extents(par, son) {
-			let F = Object.create(Parent.prototype)
-			F.constructor = son
-			console.log(F);
-			son.prototype = F
-			F = null
-		 }
+		// 第六种：寄生式组合继承
+		function assginObj(parent, son) {
+			let f = Object.create(parent.prototype)
+			console.log('f', f, typeof f);
+			f.constructor = son
+			son.prototype = f
+			f = null
+		}
+		assginObj(Parent, Son)
 
-		 Extents(Parent, Lu)
-		 Lu.prototype.post = {
-		 	 ers: '滚底座'
-		 }
-		 let z = new Lu()
-		 console.log('的健身房', z);
-        // 第一种继承: 原型链继承 创建实例时无法向父组件传参，并且修改父组件的复杂类型方法，会影响其他实例
+		Son.prototype.sonHandle = function () { }
 
-        // function Son() {
-        //     this.package = 63
+		let a = new Son(66)
+		let b = new Son(77)
+
+		console.log('第一种', a, '第二种', b);
+
+
+
+
+
+
+        // 第五种：寄生式继承
+        // 可以向父级传参，也不会改变复杂类型
+        // 缺点： 给当前构造函数添加原型无用
+        // function Son(v) {
+        //     let f =  Object.create(new Parent(99))
+        //     f.name = '子级'
+        //     return f
+        // }
+        // let five = new Son(99)
+        // let fiveS = new Son(100)
+        // Son.prototype =function () {}
+        // five.list.push(5)
+        // fiveS.say('第二天中')
+        // console.log('第一种', five, '第二种', fiveS);
+
+
+
+        //第四种：原型继承
+        // 修改复杂类型会更改其他实例的数据
+        // 无法向父级传参
+        // Son.prototype = Object.create(new Parent())
+        // const four = new Son()
+        // const fours = new Son()
+        // four.list.push(5)
+        // console.log('第一种', four, '第二种', fours);
+
+
+
+
+        //第三种：组合式继承
+        //  解决了前两种问题，
+        //  缺点：创建实例会调用两次构造函数
+        // function Son(v) {
+        //     this.name = '子级'
+        //     Parent.call(this, v)
         // }
 
         // Son.prototype = new Parent()
+        // const three = new Son(99)
+        // const threes = new Son(100)
+        // three.list.push(5)
+        // threes.say('第二种')
+        // console.log('第一种', three,'第二种', threes, count);
 
-        // let a = new Son()
-        // a.arr.push(333)
-        // let b = new Son()
-        // console.log("我是第一种继承", a, b)
 
-        // 第二种：构造函数继承:无法使用附件原型方法，解决了修改复杂类型影响实例，也可以传参
-
-        // function Son(name) {
-        //     this.package = 96
-        //     Parent.call(this,name, 56)
+        // 第二种: 构造函数继承
+        // 可以向父级构造函数传递参数
+        // 改变引用类型也不会改变其他实例
+        // 缺点：无法继承父级原型的属性
+        // function Son(v) {
+        //     this.name = '子级'
+        //     Parent.call(this, v)
         // }
-        // let a = new Son("张三")
-        // console.log("构造函数继承", a);
 
-        // 第三种：组合继承 ：会调用两次父级构造函数、造成性能问题
+        // let Two = new Son(26)
+        // let Twos = new Son(17)
+        // Two.list.push(5)
+        // console.log('第一种',Two, '第二种', Twos);
 
-        // function Son (name) {
-        //     Parent.call(this, name, 96)
-        //     this.post = "son方法"
-        // }
+
+        // 第一种继承：原型链继承
+        // 缺点：创建实例时，无法想父级构造函数传递参数；引用类型一旦被修改，其他实例也会被修改
         // Son.prototype = new Parent()
-        // Son.prototype.fn = function () {
-        //     console.log("子组件的方法");
-        // }
-        // Son.prototype.constructor = Son
+        // let one = new Son()
+        // let oneS = new Son()
 
-        // let a = new Son("欧派")
-        // console.log("这是组合继承", a);
-		
-		
-		// 四、原型式继承
-		 
-		//  function ObjCreate(o) {
-		// 	 let F = function() {}
-		// 	 F.prototype = o
-		// 	 console.log('ff', F.prototype)
-		// 	 return new F()
-		//  }
-		
-		// let test2 = ObjCreate(perent)
-		// console.log('test2', test2);
-		
-		// let newObj = Object.create(perent)
-		// let test = Object.create(perent)
-		// newObj.arr.push(10)
-		// console.log('拿到的数据', newObj, test);
-		
-		
-		// 寄生式继承
-		
-		// function createObj(o){
-		//   let clone = Object.create(o);  //调用函数创建一个新对象
-		//   clone.sayName = function(){  // 以某种方式来增强该对象
-		//     console.log('hi');
-		//   }
-		//   return clone           // 返回该对象
-		// }
-		
-		// let test5 = createObj(perent)
-		// test5.arr.push(12)
-		// let test6 = createObj(perent)
-		
-		// console.log('寄生式继承', test5, test6);
-		
-        // 第四种：寄生组合继承：
-
-  //       function Son (po) {
-  //           this.son = po || "son"
-  //           Parent.call(this)
-  //       }
-
-  //       Son.prototype = Object.create(Parent.prototype)
-  //       Son.prototype.constructor = Son
-		// Son.prototype.fun = "这是子元素的"
-  //       let a = new Son()
-		// a.arr.push(9)
-		// let b = new Son()
-  //       a.constructor.prototype.fun = "56"
-  //       console.log("寄生组合", a, b);
-  
-		function New(cb, ...arg) {
-			let F = {}
-			F.__proto__ = cb.prototype
-			console.log( F, '+++++', F.__proto__, arguments, arg);
-			let result = cb.apply(F, arg)
-			console.log('返回的', result, F);
-			return result instanceof Object ? result : F
-		}
-  
-		function fn(v, n) {
-			this.name = n
-			this.age = v || 99
-			console.log('打印一下this', this, this.name);
-			return 54
-			// return {age: 225}
-		}
-		fn.prototype.cb = function() {
-			console.log('方法内打印一下', this.name);
-		}
-		let post = New(fn, 26, '李四')
-		
-		console.log( 'post', post.cb());
-  
-
-    </script>
+        // one.list.push(5)
+        // one.say('第一种')
+        // console.log('第一种', one, '第二种',oneS);
+	</script>
 </body>
 
 </html>
+
+
+<!-- 原型链继承： 子级构造函数的prototype = 父级的实例，不能向父级传递参数，并且复杂类型的值共享 -->
+<!-- 构造函数继承： 在子级构造函数中调用call，将父级的this指向子级构造函数的this，可以向父级传递构造函数，并且数据也不会共享，但无法继承父级构造函数中的prototype -->
+<!-- 组合式继承：子级构造函数借用call， 然后让子级prototype = 父级实例，这样虽然可以解决前面两个问题，但却调用了父级构造函数两次 -->
+<!-- 原型式继承： 让父级的Object.create(父级实例) = 子级的prototype， 无法传递参数，并且数据会共享 -->
+<!-- 寄生式继承： 在自己构造函数中，用Object.create(父级实例)创建一个对象，然后return这个对象，可以解决传参的问题，也不会数据共享， 但无法为当前子级构造函数添加原型属性 -->
+<!-- 寄生组合式继承：在自己构造函数中借用call，将父级构造函数的this指向子级构造函数的this， 然后创建一个fun，将父级构造函数和子级构造函数传入，利用Object.create(父级构造函数的原型),然后将创造出来的对象的constructor指向参数子构造函数， 然后子构造函数的prototype = 这个对象 -->
